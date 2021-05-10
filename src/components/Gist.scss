@@ -1,0 +1,41 @@
+.gist-step {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding: 25px;
+    border-top: 1px solid #CCC;
+}
+
+.gist-step__paints {
+    display: flex;
+    margin-top: 25px;
+}
+
+.gist-paint {
+    display: flex;
+    align-items: center;
+
+}
+
+.gist-paint__example {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    border-radius: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.gist-paint__title {
+    display: inline-block;
+    line-height: 1.5em;
+}
+
+.gist-paint__ratio {
+    margin-left: 15px;
+    border: 1px solid red;
+    border-radius: 100px;
+    background-color: red;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #FFF;
+}
