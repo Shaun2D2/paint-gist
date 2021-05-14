@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './Card.scss';
-
-const Card = ({ children }) => (
-  <div className="app-card">
-    <div className="app-card__body">
+const Card = ({ children, title }) => (
+  <div className="card">
+    {title && (<h5 className="card-title">{title}</h5>)}
+    <div className="card-body">
       {children}
     </div>
   </div>
