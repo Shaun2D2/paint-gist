@@ -11,7 +11,6 @@ const Input = ({ label, appendLabel, ...restOfProps }) => {
       <input className="form-control" {...restOfProps} />
       {appendLabel && (<span className="input-group-text">{appendLabel}</span>)}
     </div>
-
   );
 };
 
