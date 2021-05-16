@@ -8,18 +8,23 @@ import Gist from './pages/Gist';
 import Home from './pages/Home';
 import User from './pages/User';
 
+import PrimaryNav from './components/Navbar';
+
 const App = () => {
   useEffect(() => console.log('app booted up'));
 
   return (
-    <Router>
-      <Route path="/" component={Home} />
-      <Route path="/dashboard" component={Dashboard} />
-      <Route path="/gist/:id" component={Gist} />
-      <Route path="/gist" component={GistCreate} />
-      <Route path="/user/:id" component={User} />
-      <Route path="/user/:id/settings" component={Settings} />
-    </Router>
+    <>
+      <PrimaryNav />
+      <Router>
+        <Route path="/" component={Home} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/gist/:id" component={Gist} />
+        <Route path="/gist" component={GistCreate} />
+        <Route path="/user/:id" component={User} />
+        <Route path="/user/:id/settings" component={Settings} />
+      </Router>
+    </>
   );
 };
 
