@@ -28,4 +28,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   plugins: [new HtmlWebpackPlugin()],
+  devServer: {
+    historyApiFallback: true,
+  },
 };
