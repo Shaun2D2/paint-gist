@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import React, { useEffect } from 'react';
 
@@ -10,11 +11,13 @@ import User from './pages/User';
 
 import PrimaryNav from './components/Navbar';
 
+const queryClient = new QueryClient();
+
 const App = () => {
   useEffect(() => console.log('app booted up'));
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <PrimaryNav />
       <Router>
         <Route path="/" component={Home} />
@@ -24,7 +27,7 @@ const App = () => {
         <Route path="/user/:id" component={User} />
         <Route path="/user/:id/settings" component={Settings} />
       </Router>
-    </>
+    </QueryClientProvider>
   );
 };
 
