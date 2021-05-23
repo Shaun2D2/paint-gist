@@ -1,2 +1,11 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~bootswatch/dist/zephyr/bootstrap.css";
+
+body {
+    padding-left: 170px;
+    transition: padding-left .5s;
+}
+
+.nav-bar-affixed {
+    padding-left: 350px;
+}

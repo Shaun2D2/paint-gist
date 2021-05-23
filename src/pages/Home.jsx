@@ -5,9 +5,12 @@ import { useQuery } from 'react-query';
 import Card from '../components/Card';
 import Input from '../components/forms/Input';
 
-const Home = () => {
-  const { isLoading, error, data } = useQuery('gists', () => fetch('http://localhost:3000/gist').then((res) => res.json()));
+import useConfig from '../hooks/useConfig';
 
+const Home = () => {
+  const { api } = useConfig();
+  const { isLoading, error, data } = useQuery('gists', () => fetch(`${api}/gists`).then((res) => res.json()));
+  console.log(data);
   if (!data) return null;
 
   return (

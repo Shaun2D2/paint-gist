@@ -1,0 +1,119 @@
+.nav-bar {
+    height: 100%;
+    width: 100px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    padding: 15px;
+    background-color: #f8f9fa !important;
+    z-index: 9999;
+    &.nav-bar__affixed 
+    .nav-bar__item-title
+    {
+        display: inline !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    .nav-bar__brand-title {
+        opacity: 1 !important;
+    }
+    &:hover {
+        width: 300px;
+        .nav-bar__item-title {
+            display: inline;
+            visibility: visible;
+            opacity: 1;
+        }
+        .nav-bar__lock {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+    transition: width .25s;
+}
+
+.nav-bar__brand {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.nav-bar__brand-icon-wrapper {
+    border: 3px solid #3459e6;
+    width: 55px;
+    height: 55px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+.nav-bar__brand-title {
+    opacity: 0;
+    font-size: 1.5em;
+    margin-left: 15px;
+    white-space: nowrap;
+}
+
+.nav-bar__items {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.nav-bar__item {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 25px;
+    cursor: pointer;
+    display: flex;
+
+}
+
+.nav-bar__item-icon {
+    font-size: 25px;
+}
+
+.nav-bar__item-title {
+    font-size: 15px;
+    margin-left: 15px;
+    visibility: none;
+    opacity: 0;
+    transition: opacity .2s;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.nav-bar__lock {
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    width: 75px;
+    height: 75px;
+    border-radius: 100px;
+    background-color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    // visibility: hidden;
+    opacity: 0;
+    transition: opacity .3s;
+    box-shadow: 2.5px 1px 3px #ccc;
+}
+
+.nav-bar__affixed {
+    width: 300px !important;
+}
+
+.nav-bar__brand-icon {
+    font-size: 32px;
+}
+
+.nav-bar__items-bottom {
+    position: absolute;
+    bottom: 0;
+}
