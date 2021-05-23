@@ -18,8 +18,8 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <PrimaryNav />
       <Router>
+        <PrimaryNav />
         <Route path="/" component={Home} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/gist" exact component={GistCreate} />
