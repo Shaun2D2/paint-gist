@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 
 import useConfig from '../hooks/useConfig';
+import Page from '../components/Page';
 
 const Dashboard = () => {
   const { api } = useConfig();
@@ -9,9 +10,9 @@ const Dashboard = () => {
   const { isLoading, error, data } = useQuery('gists', () => fetch(`${api}/gists`).then((res) => res.json()));
 
   return (
-    <div className="container">
+    <Page title="Dashboard">
       {JSON.stringify(data)}
-    </div>
+    </Page>
   );
 };
 

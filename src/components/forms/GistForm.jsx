@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import {
   useForm, useFieldArray, useFormContext, FormProvider,
 } from 'react-hook-form';
@@ -31,6 +31,8 @@ const LineItem = ({
     remove(paintIndex);
   };
 
+  const paintOptions = useMemo(() => paints.map((paint) => ({ id: paint.id, label: paint.name })));
+
   return (
     <div className="gist-form-line-item">
       <div className="row">
@@ -51,7 +53,7 @@ const LineItem = ({
         <div className="col-sm-4">
           <Typeahead
             onChange={handleTypeaheadChange}
-            options={paints}
+            options={paintOptions}
             ref={ref}
             placeholder="search paints"
           />
@@ -93,11 +95,14 @@ const GistForm = ({ techniques, paints }) => {
   const { fields, append, remove } = useFieldArray({ name: 'gist-step', control });
 
   const handleAdd = () => append();
-  const handleRemove = (index) => remove(index);
+  const handleRemove = (index) => {
+    remove(index);
+  };
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <Input label="Title" {...register('title')} />
         <Input label="Model Name" {...register('modelName')} />
         <div className="gist-form__steps">
           { fields.map((field, index) => <LineItem techniques={techniques} paints={paints} index={index} removeStep={() => handleRemove(index)} />) }
@@ -108,8 +113,6 @@ const GistForm = ({ techniques, paints }) => {
         <div className="gist-form__controls">
           <Button type="submit" text="Save Gist" />
         </div>
-
-        
       </form>
     </FormProvider>
   );

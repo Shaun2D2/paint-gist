@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHome, faPalette, faCog, faLock, faLockOpen, faPaintBrush, faSearch,
@@ -10,19 +11,17 @@ import './Navbar.scss';
 
 const BODY_TAG = document.getElementsByTagName('body')[0];
 
-const NavItem = ({ icon, path, title }) => {
-  return (
-    <NavLink to={path} className="nav-bar__item">
-      <FontAwesomeIcon icon={icon} className="nav-bar__item-icon" />
-      <div className="nav-bar__item-title">{title}</div>
-    </NavLink>
-  );
+const NavItem = ({ icon, path, title }) => (
+  <NavLink to={path} className="nav-bar__item">
+    <FontAwesomeIcon icon={icon} className="nav-bar__item-icon" />
+    <div className="nav-bar__item-title">{title}</div>
+  </NavLink>
+);
 
-  // const FancyLink = () => (
-  //   <div className="nav-bar__item" />
-  // );
-
-  // return <Link to={path} component={FancyLink} />;
+NavItem.propTypes = {
+  icon: PropTypes.node.isRequired,
+  path: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 const PrimaryNav = () => {
@@ -54,10 +53,7 @@ const PrimaryNav = () => {
 
       <div className="nav-bar__items-bottom">
         <div className="nav-bar__items">
-          <div className="nav-bar__item">
-            <FontAwesomeIcon icon={faCog} className="nav-bar__item-icon" />
-            <div className="nav-bar__item-title">Settings</div>
-          </div>
+          <NavItem path="/settings" icon={faCog} title="Settings" />
         </div>
       </div>
       <div className="nav-bar__lock" onClick={toggleLock} role="button">

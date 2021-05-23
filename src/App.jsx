@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import React, { useEffect } from 'react';
 
 import GistCreate from './pages/GistCreate';
@@ -20,12 +20,13 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <Router>
         <PrimaryNav />
-        <Route path="/" component={Home} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/gist" exact component={GistCreate} />
-        <Route path="/gist/:id" exact component={Gist} />
-        {/* <Route path="/user/:id" component={User} />
-        <Route path="/user/:id/settings" component={Settings} /> */}
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/create" exact component={GistCreate} />
+          <Route path="/gist/:id" exact component={Gist} />
+          <Route component={() => <h1>404</h1>} />
+        </Switch>
       </Router>
     </QueryClientProvider>
   );
