@@ -10,7 +10,7 @@ import useConfig from '../hooks/useConfig';
 const Home = () => {
   const { api } = useConfig();
   const { isLoading, error, data } = useQuery('gists', () => fetch(`${api}/gists`).then((res) => res.json()));
-  console.log(data);
+
   if (!data) return null;
 
   return (

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Card = ({ children, title, imageUrl }) => (
-  <div className="card mb-5 mt-5">
+  <div className="card mt-5">
     {title && (<h5 className="card-title">{title}</h5>)}
     {imageUrl && (<img className="card-img-top" src={imageUrl} alt="title" />)}
     <div className="card-body">
