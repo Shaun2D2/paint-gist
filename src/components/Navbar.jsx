@@ -56,8 +56,10 @@ const PrimaryNav = () => {
           <NavItem path="/settings" icon={faCog} title="Settings" />
         </div>
       </div>
-      <div className="nav-bar__lock" onClick={toggleLock} role="button">
-        <FontAwesomeIcon icon={locked ? faLockOpen : faLock} className="nav-bar__item-icon" />
+      <div className="nav-bar__lock-wrapper">
+        <div className="nav-bar__lock" onClick={toggleLock} role="button">
+          <FontAwesomeIcon icon={locked ? faLockOpen : faLock} className="nav-bar__item-icon" />
+        </div>
       </div>
     </div>
   );
