@@ -19,7 +19,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <PrimaryNav />
+        {window.location.pathname !== '/' && <PrimaryNav />}
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/dashboard" exact component={Dashboard} />
