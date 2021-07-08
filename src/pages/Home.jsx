@@ -1,5 +1,10 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPaintBrush,
+} from '@fortawesome/free-solid-svg-icons';
 
+import PainterSvg from '../svg/painter.svg';
 import './Hero.scss';
 import './Home.scss';
 
@@ -21,8 +26,14 @@ const Hero = () => (
 const Home = () => (
   <div className="container">
     <div className="row">
-      <div className="col-sm-12">
-        <Hero />
+      <div className="col-sm-12 mt-5 pt-5 text-center">
+        <h1 style={{ fontSize: '3.5em' }}>
+          <FontAwesomeIcon icon={faPaintBrush} />
+          {' '}
+          Paint Gist
+        </h1>
+        <p className="text-muted mb-5">Coming Soon</p>
+        {/* <Hero /> */}
       </div>
     </div>
   </div>
