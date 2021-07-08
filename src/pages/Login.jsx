@@ -18,7 +18,7 @@ const Login = () => {
 
   const onSubmit = async (values) => {
     try {
-      await axios.post(`${api}/auth/register`, values);
+      await axios.post(`${api}/auth`, values);
 
       history.push('/dashboard');
     } catch (e) {
@@ -41,7 +41,7 @@ const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input {...register('email')} label="Email" />
             <Input {...register('password')} label="Password" type="password" />
-            <Button design="primary" text="Submit" />
+            <Button design="primary" text="Submit" type="submit" />
           </form>
 
         </div>
