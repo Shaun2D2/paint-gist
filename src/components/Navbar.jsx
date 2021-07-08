@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -26,6 +26,13 @@ NavItem.propTypes = {
 
 const PrimaryNav = () => {
   const [locked, setLocked] = useState(false);
+
+  useEffect(() => {
+    document.getElementsByTagName('body')[0].classList.add('sidebar-mounted');
+    return () => {
+      document.getElementsByTagName('body')[0].classList.remove('sidebar-mounted');
+    };
+  });
 
   const toggleLock = () => {
     setLocked(!locked);

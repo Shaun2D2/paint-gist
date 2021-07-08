@@ -4,9 +4,14 @@ import {
 } from 'react-hook-form';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import Input from './Input';
 import Button from './Button';
+
+import getConfig from '../../utils/config';
+
+const { api } = getConfig();
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './GistForm.scss';
@@ -17,14 +22,15 @@ const LineItem = ({
   const ref = useRef();
 
   const { register, control } = useFormContext();
-  const { fields, append, remove } = useFieldArray({ name: `gist-step.${index}.paint`, control });
+  const { fields, append, remove } = useFieldArray({ name: `steps.${index}.paints`, control });
 
   const handleTypeaheadChange = ({ 0: paint }) => {
     ref.current.clear();
     if (!paint) return;
-
-    append({ id: paint.id, label: paint.label, ratio: '1' });
-    // setPaints([...paints, paint]);
+    console.log(paint);
+    append({
+      id: paint.id, paintId: paint.id, label: paint.label, ratio: '1',
+    });
   };
 
   const handleRemovePaint = (paintIndex) => {
@@ -40,13 +46,13 @@ const LineItem = ({
           <h5 className="gist-form-line-item__title">{`Step ${index + 1}`}</h5>
         </div>
         <div className="col-sm-2">
-          <select className="form-select" {...register(`gist-step.${index}.technique`)}>
+          <select className="form-select" {...register(`steps.${index}.techniqueId`)}>
             <option>Select Technique</option>
             {techniques.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}
           </select>
         </div>
         <div className="col-sm-10">
-          <Input placeholder="describe step" {...register(`gist-step.${index}.description`)} />
+          <Input placeholder="describe step" {...register(`steps.${index}.description`)} />
         </div>
       </div>
       <div className="row">
@@ -64,10 +70,10 @@ const LineItem = ({
             <div className="row">
               <div className="col-sm-3">
                 <Input value={paint.label} disabled />
-                <Input {...register(`gist-step.${index}.paint.${paintIndex}.id`)} hidden />
+                <Input {...register(`steps.${index}.paints.${paintIndex}.id`)} hidden />
               </div>
               <div className="col-sm-3">
-                <Input appendLabel="parts" {...register(`gist-step.${index}.paint.${paintIndex}.ratio`)} defaultValue={paint.ratio} />
+                <Input appendLabel="parts" {...register(`steps.${index}.paints.${paintIndex}.ratio`)} defaultValue={paint.ratio} />
               </div>
               <div className="col-sm-6">
                 <Button text="Remove" design="link" onClick={() => handleRemovePaint(paintIndex)} />
@@ -88,11 +94,19 @@ LineItem.propTypes = {
 };
 
 const GistForm = ({ techniques, paints }) => {
-  const onSubmit = useCallback((values) => console.log(values), []);
+  const onSubmit = useCallback(async (values) => {
+    try {
+      await axios.post(`${api}/gists`, values, { withCredentials: true });
+
+      // history.push('/dashboard');
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   const methods = useForm();
   const { register, handleSubmit, control } = methods;
-  const { fields, append, remove } = useFieldArray({ name: 'gist-step', control });
+  const { fields, append, remove } = useFieldArray({ name: 'steps', control });
 
   const handleAdd = () => append();
   const handleRemove = (index) => {

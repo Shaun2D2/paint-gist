@@ -1,23 +1,21 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import axios from 'axios';
 
 import useConfig from '../hooks/useConfig';
 import Page from '../components/Page';
-import Card from '../components/Card';
 
 import GistForm from '../components/forms/GistForm';
 
 const GistCreate = () => {
   const { api } = useConfig();
 
-  const { data: paintData } = useQuery('paints', () => fetch(`${api}/paints`).then((res) => res.json()));
-  const { data: techniqueData } = useQuery('techniques', () => fetch(`${api}/techniques`).then((res) => res.json()));
+  const { data: paintData } = useQuery('paints', () => axios(`${api}/paints`, { withCredentials: true }).then((res) => res.data));
+  const { data: techniqueData } = useQuery('techniques', () => axios(`${api}/techniques`, { withCredentials: true }).then((res) => res.data));
 
   return (
     <Page title="Create A Gist">
-      <Card>
-        <GistForm techniques={techniqueData} paints={paintData} />
-      </Card>
+      <GistForm techniques={techniqueData} paints={paintData} />
     </Page>
   );
 };

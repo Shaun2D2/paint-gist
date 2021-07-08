@@ -6,5 +6,8 @@
     "FORM_FIRSTNAME": "First Name",
     "FORM_LASTNAME": "Last Name",
     "FORM_PASSWORD": "Password",
-    "NEVERMIND": "Nevermind"
+    "NEVERMIND": "Nevermind",
+    "WELCOME_BACK": "Welcome back!",
+    "NO_ACCOUNT_YET": "No account yet?  Not a problem!",
+    "REGISTER_NOW": "Register now"
 }

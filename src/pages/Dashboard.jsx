@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import axios from 'axios';
 
 import useConfig from '../hooks/useConfig';
 import Page from '../components/Page';
@@ -9,7 +10,7 @@ import GistCard from '../components/GistCard';
 const Dashboard = () => {
   const { api } = useConfig();
 
-  const { isLoading, error, data } = useQuery('gists', () => fetch(`${api}/gists`).then((res) => res.json()));
+  const { isLoading, error, data } = useQuery('gists', () => axios(`${api}/gists`, { withCredentials: true }).then((res) => res.data.data));
 
   if (isLoading) return null;
 
