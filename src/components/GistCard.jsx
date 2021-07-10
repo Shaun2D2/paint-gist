@@ -1,7 +1,6 @@
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Badge from 'react-bootstrap/Badge';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import React from 'react';
 
@@ -15,17 +14,6 @@ import Card from './Card';
 import './GistCard.scss';
 
 const { Item, Toggle, Menu } = Dropdown;
-
-const TEMP_COLORS = [
-  {
-    name: 'Abaddon Black',
-    color: '#000',
-  },
-  {
-    name: 'Fulgrim Pink',
-    color: '#fdfd',
-  },
-];
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   // eslint-disable-next-line jsx-a11y/anchor-is-valid
@@ -43,7 +31,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   </a>
 ));
 
-const GistCard = ({ title, model, stepCount }) => (
+const GistCard = ({ title, model, stepCount, colors }) => (
   <Card>
     <div className="gist-card">
       <div className="gist-card__header">
@@ -56,17 +44,16 @@ const GistCard = ({ title, model, stepCount }) => (
           </Menu>
         </Dropdown>
       </div>
-
       <div className="gist-card__color-list">
-        {TEMP_COLORS.map(({ name, color }) => (
+        {colors.map(({ name, hex }) => (
           <OverlayTrigger
-            key={color}
+            key={hex}
             placement="bottom"
             overlay={(
               <Tooltip id={`tooltip-${name}`}>{name}</Tooltip>
       )}
           >
-            <div className="gist-card__color" style={{ backgroundColor: color }} />
+            <div className="gist-card__color" style={{ backgroundColor: `#${hex}` }} />
           </OverlayTrigger>
         ))}
       </div>
