@@ -1,38 +1,29 @@
 import React from 'react';
-import { useQuery } from 'react-query';
-import axios from 'axios';
 
-import useConfig from '../hooks/useConfig';
+
 import Page from '../components/Page';
-import Input from '../components/forms/Input';
 import GistCard from '../components/GistCard';
+
+import withAuth from '../hoc/withAuth';
+import useUserGists from '../hooks/useUserGists';
 
 import { Tabs, TabPanel } from '../components/Tab';
 
-const Dashboard = () => {
-  const { api } = useConfig();
-
-  const { isLoading, error, data } = useQuery('gists', () => axios(`${api}/gists`, { withCredentials: true }).then((res) => res.data.data));
+const Dashboard = ({ user }) => {
+  const { id } = user;
+  const { isLoading, error, data } = useUserGists(id);
 
   if (isLoading) return null;
 
   return (
     <Page title="Dashboard">
-      {/* <div className="row">
-        <div className="col-sm-12">
-          <form>
-            <Input placeholder="Search Your Gists..." />
-          </form>
-          <hr />
-        </div>
-      </div> */}
-
       <Tabs>
         <TabPanel name="My Gists">
           <div className="row">
             { data.map((item) => (
               <div className="col-sm-4" style={{ marginBottom: 50 }}>
                 <GistCard
+                  id={item.id}
                   colors={item.paintSummary}
                   title={item.title}
                   model={item.modelName}
@@ -54,4 +45,5 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+// export default Dashboard;
+export default withAuth(Dashboard);

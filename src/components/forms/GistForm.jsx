@@ -11,10 +11,10 @@ import Button from './Button';
 
 import getConfig from '../../utils/config';
 
-const { api } = getConfig();
-
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './GistForm.scss';
+
+const { api } = getConfig();
 
 const LineItem = ({
   techniques, paints, index, removeStep,
@@ -116,8 +116,13 @@ const GistForm = ({ techniques, paints }) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input label="Title" {...register('title')} />
-        <Input label="Model Name" {...register('modelName')} />
+        <div className="row">
+          <div className="col-sm-6">
+            <Input label="Title" {...register('title')} />
+            <Input label="Model Name" {...register('modelName')} />
+
+          </div>
+        </div>
         <div className="gist-form__steps">
           { fields.map((field, index) => <LineItem techniques={techniques} paints={paints} index={index} removeStep={() => handleRemove(index)} />) }
         </div>

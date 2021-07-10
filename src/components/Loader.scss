@@ -1,0 +1,10 @@
+.app-loader {
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-loader--full-page {
+    min-height: 100vh !important;
+}
