@@ -18,7 +18,7 @@ const Login = () => {
 
   const onSubmit = async (values) => {
     try {
-      await axios.post(`${api}/auth`, values);
+      await axios.post(`${api}/auth`, values, { withCredentials: true });
 
       history.push('/dashboard');
     } catch (e) {
