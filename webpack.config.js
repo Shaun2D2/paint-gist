@@ -48,7 +48,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  plugins: [new HtmlWebpackPlugin()],
+  plugins: [new HtmlWebpackPlugin({
+    publicPath: '/',
+  })],
   devServer: {
     historyApiFallback: true,
     disableHostCheck: true,
