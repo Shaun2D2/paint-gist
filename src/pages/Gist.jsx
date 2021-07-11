@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faPaintBrush, faHeart, faShare
+  faPaintBrush, faHeart, faShare,
 } from '@fortawesome/free-solid-svg-icons';
 
 import Page from '../components/Page';
@@ -36,7 +36,7 @@ const Gist = () => {
                 <FontAwesomeIcon icon={faPaintBrush} size="3x" color="#3459e6" />
               </div>
               <div className="gist__title">
-                  {data.title}
+                {data.title}
               </div>
               <div className="gist__actions">
                 <FontAwesomeIcon icon={faHeart} color="#FFF" size="lg" />
