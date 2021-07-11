@@ -2,9 +2,12 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import {
   useForm, useFieldArray, useFormContext, FormProvider,
 } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import { Typeahead } from 'react-bootstrap-typeahead';
+import Toggle from 'react-toggle';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { useIntl } from 'react-intl';
 
 import Input from './Input';
 import Button from './Button';
@@ -12,6 +15,8 @@ import Button from './Button';
 import getConfig from '../../utils/config';
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import 'react-toggle/style.css';
+
 import './GistForm.scss';
 
 const { api } = getConfig();
@@ -27,7 +32,6 @@ const LineItem = ({
   const handleTypeaheadChange = ({ 0: paint }) => {
     ref.current.clear();
     if (!paint) return;
-    console.log(paint);
     append({
       id: paint.id, paintId: paint.id, label: paint.label, ratio: '1',
     });
@@ -94,23 +98,32 @@ LineItem.propTypes = {
 };
 
 const GistForm = ({ techniques, paints }) => {
+  const history = useHistory();
+  const intl = useIntl();
+
   const onSubmit = useCallback(async (values) => {
     try {
       await axios.post(`${api}/gists`, values, { withCredentials: true });
 
-      // history.push('/dashboard');
+      history.push('/dashboard');
     } catch (e) {
       console.log(e);
     }
   }, []);
 
   const methods = useForm();
-  const { register, handleSubmit, control } = methods;
+  const {
+    register, handleSubmit, control, setValue,
+  } = methods;
   const { fields, append, remove } = useFieldArray({ name: 'steps', control });
 
   const handleAdd = () => append();
   const handleRemove = (index) => {
     remove(index);
+  };
+
+  const handlePrivateToggle = (ev) => {
+    setValue('private', ev.target.checked);
   };
 
   return (
@@ -120,6 +133,19 @@ const GistForm = ({ techniques, paints }) => {
           <div className="col-sm-6">
             <Input label="Title" {...register('title')} />
             <Input label="Model Name" {...register('modelName')} />
+            <div className="form-group">
+              <select className="form-control" {...register('difficulty')}>
+                <option>easy</option>
+                <option>intermediate</option>
+                <option>difficult</option>
+              </select>
+            </div>
+            <label>
+              <Toggle
+                onChange={handlePrivateToggle}
+              />
+              <span>{intl.formatMessage({ id: 'PRIVATE' })}</span>
+            </label>
 
           </div>
         </div>

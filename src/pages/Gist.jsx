@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPaintBrush, faHeart, faShare,
@@ -10,12 +11,44 @@ import useGist from '../hooks/useGists';
 
 import './Gist.scss';
 
-const Step = () => (
+const Step = ({ technique, description, paints }) => (
   <div className="gist-step">
     <div className="gist-step__header">
-      <div className="gist-step__header-title">Wash</div>
+      <div className="gist-step__header-title">{technique.name}</div>
     </div>
-    <p>Some cool instruction on how this thing is working or something</p>
+    <div className="gist-step__body">
+      <p>{description}</p>
+      {
+        paints.length > 0 && (
+        <Table size="sm">
+          {/* <thead>
+            <tr>
+              <th>Color</th>
+              <th>Ratio</th>
+            </tr>
+          </thead> */}
+          <tbody>
+            { paints.map((paint) => (
+              <tr>
+                <td>{paint.paint.name}</td>
+                {
+                    paints.length > 1 && (
+                    <td>
+                      {paint.ratio}
+                      {' '}
+                      part
+                    </td>
+
+                    )
+                }
+              </tr>
+            )) }
+          </tbody>
+        </Table>
+        )
+    }
+
+    </div>
   </div>
 );
 

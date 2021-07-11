@@ -4,6 +4,7 @@
     overflow: hidden;
     box-shadow: 1px 2px 10px #CCC;
     min-height: 500px;
+    counter-reset: gist-counter;
 }
 
 .gist__left-panel {
@@ -33,14 +34,38 @@
 
 .gist__right-panel {
     padding: 15px;
+    width: 100%;
 }
 
 .gist-step {
     margin-bottom: 50px;
+    padding-left: 75px;
+    counter-increment: gist-counter;
+    position: relative;
+    &:before {
+        font-weight: bold;
+        content: counter(gist-counter);
+        position: absolute;
+        left: 0px;
+        margin: 5px;
+        width: 50px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        font-size: 1.5em;
+        background-color: #f8f9fa !important; 
+    }
 }
 
 .gist-step__header {
     display: flex;
+    padding-top: 10px;
+}
+
+.gist-step__body {
+    margin-left: 15px;
 }
 
 .gist-step__header-title {
