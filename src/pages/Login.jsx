@@ -1,9 +1,11 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import Button from '../components/forms/Button';
 import Input from '../components/forms/Input';
@@ -12,8 +14,18 @@ import getConfig from '../utils/config';
 
 const { api } = getConfig();
 
+const schema = yup.object().shape({
+  email: yup.string().email(),
+  password: yup.string().required(),
+});
+
 const Login = () => {
-  const { handleSubmit, register } = useForm();
+  const methods = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const { handleSubmit } = methods;
+
   const intl = useIntl();
   const history = useHistory();
 
@@ -41,11 +53,13 @@ const Login = () => {
             {' '}
             <Link to="/register">{intl.formatMessage({ id: 'REGISTER_NOW' })}</Link>
           </p>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input {...register('email')} label="Email" />
-            <Input {...register('password')} label="Password" type="password" />
-            <Button design="primary" text="Submit" type="submit" />
-          </form>
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Input name="email" label="Email" />
+              <Input name="password" type="password" label="Password" />
+              <Button design="primary" text="Submit" type="submit" />
+            </form>
+          </FormProvider>
 
         </div>
       </div>
