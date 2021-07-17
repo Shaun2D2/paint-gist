@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 import Button from '../components/forms/Button';
 import Input from '../components/forms/Input';
@@ -22,7 +23,9 @@ const Login = () => {
 
       history.push('/dashboard');
     } catch (e) {
-      console.log(e);
+      if (e?.response?.status === 401) {
+        toast.error(intl.formatMessage({ id: 'LOGIN_FAILED' }));
+      }
     }
   };
 

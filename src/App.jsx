@@ -2,6 +2,7 @@ import 'regenerator-runtime/runtime';
 import { IntlProvider } from 'react-intl';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ToastContainer } from 'react-toastify';
 
 import React, { useEffect } from 'react';
 
@@ -17,6 +18,8 @@ import Login from './pages/Login';
 import PrimaryNav from './components/Navbar';
 
 import translations from './translations/en-US.json';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient();
 
@@ -45,6 +48,7 @@ const App = () => {
           </Switch>
         </Router>
       </QueryClientProvider>
+      <ToastContainer />
     </IntlProvider>
   );
 };
