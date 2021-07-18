@@ -5,12 +5,19 @@ import { useController } from 'react-hook-form';
 
 import './Input.scss';
 
+/**
+ * left off on form validation, need to set this up right
+ *
+ * @param {*} param0
+ * @returns
+ */
+
 const Input = ({
-  name, label, appendLabel, type, defaultValue
+  name, label, appendLabel, type, defaultValue,
 }) => {
   const {
     field,
-    fieldState: { invalid },
+    fieldState: { invalid, error },
   } = useController({ name, defaultValue: defaultValue || '' });
 
   return (
@@ -18,7 +25,9 @@ const Input = ({
       {label && <label htmlFor={name} className="form-label">{label}</label>}
       <input type={type} className="form-control" {...field} />
       {appendLabel && (<span className="input-group-text">{appendLabel}</span>)}
-      {invalid && <div className="field-error">{ invalid } </div>}
+      {invalid && (
+      <div className="field-error">{error.message}</div>
+      )}
     </div>
   );
 };

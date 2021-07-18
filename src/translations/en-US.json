@@ -11,5 +11,8 @@
     "NO_ACCOUNT_YET": "No account yet?  Not a problem!",
     "REGISTER_NOW": "Register now",
     "PRIVATE": "Private",
-    "LOGIN_FAILED": "Username or password error!"
+    "LOGIN_FAILED": "Username or password error!",
+    "LOGIN_SUCCESS": "Login successful!",
+    "ACCOUNT_CREATED": "Account successfully created!",
+    "GENERAL_ERROR": "Oh no!  Something went wrong!  Try again or come back later."
 }

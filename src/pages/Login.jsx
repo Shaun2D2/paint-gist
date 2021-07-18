@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
@@ -15,11 +15,13 @@ import getConfig from '../utils/config';
 const { api } = getConfig();
 
 const schema = yup.object().shape({
-  email: yup.string().email(),
+  email: yup.string().email().required(),
   password: yup.string().required(),
 });
 
 const Login = () => {
+  const [processing, setProcessing] = useState(false);
+
   const methods = useForm({
     resolver: yupResolver(schema),
   });
@@ -31,13 +33,21 @@ const Login = () => {
 
   const onSubmit = async (values) => {
     try {
+      setProcessing(true);
+
       await axios.post(`${api}/auth`, values, { withCredentials: true });
 
       history.push('/dashboard');
+
+      toast.success(intl.formatMessage({ id: 'LOGIN_SUCCESS' }));
     } catch (e) {
+      setProcessing(false);
       if (e?.response?.status === 401) {
         toast.error(intl.formatMessage({ id: 'LOGIN_FAILED' }));
+        return;
       }
+
+      toast.error(intl.formatMessage({ id: 'GENERAL_ERROR' }));
     }
   };
 
@@ -57,7 +67,7 @@ const Login = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <Input name="email" label="Email" />
               <Input name="password" type="password" label="Password" />
-              <Button design="primary" text="Submit" type="submit" />
+              <Button design="primary" text="Submit" type="submit" disabled={processing} />
             </form>
           </FormProvider>
 
