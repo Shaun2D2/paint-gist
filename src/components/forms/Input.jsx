@@ -13,7 +13,7 @@ import './Input.scss';
  */
 
 const Input = ({
-  name, label, appendLabel, type, defaultValue,
+  name, label, appendLabel, type, defaultValue, hidden
 }) => {
   const {
     field,
@@ -23,7 +23,7 @@ const Input = ({
   return (
     <div className={classNames('mb-3', 'has-validation', { 'input-group': appendLabel, 'is-invalid': invalid })}>
       {label && <label htmlFor={name} className="form-label">{label}</label>}
-      <input type={type} className="form-control" {...field} />
+      <input type={type} className="form-control" {...field} hidden={hidden} />
       {appendLabel && (<span className="input-group-text">{appendLabel}</span>)}
       {invalid && (
       <div className="field-error">{error.message}</div>

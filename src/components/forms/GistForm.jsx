@@ -56,7 +56,7 @@ const LineItem = ({
           </select>
         </div>
         <div className="col-sm-10">
-          <Input placeholder="describe step" {...register(`steps.${index}.description`)} />
+          <Input placeholder="describe step" name={`steps.${index}.description`} />
         </div>
       </div>
       <div className="row">
@@ -73,11 +73,13 @@ const LineItem = ({
           {fields.map((paint, paintIndex) => (
             <div className="row">
               <div className="col-sm-3">
-                <Input value={paint.label} disabled />
-                <Input {...register(`steps.${index}.paints.${paintIndex}.id`)} hidden />
+                <div className="form-group">
+                  <input className="form-control" value={paint.label} disabled />
+                </div>
+                <Input name={`steps.${index}.paints.${paintIndex}.id`} hidden />
               </div>
               <div className="col-sm-3">
-                <Input appendLabel="parts" {...register(`steps.${index}.paints.${paintIndex}.ratio`)} defaultValue={paint.ratio} />
+                <Input appendLabel="parts" name={`steps.${index}.paints.${paintIndex}.ratio`} defaultValue={paint.ratio} />
               </div>
               <div className="col-sm-6">
                 <Button text="Remove" design="link" onClick={() => handleRemovePaint(paintIndex)} />

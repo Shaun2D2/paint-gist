@@ -36,7 +36,7 @@ const Routes = ({ showNav }) => {
 
   useEffect(() => {
     history.listen((location) => {
-      if (NAVBAR_SUPRESSION_ROUTES.includes(location)) {
+      if (NAVBAR_SUPRESSION_ROUTES.includes(location.pathname)) {
         showNav(false);
         return;
       }
