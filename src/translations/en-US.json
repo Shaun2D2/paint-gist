@@ -14,5 +14,15 @@
     "LOGIN_FAILED": "Username or password error!",
     "LOGIN_SUCCESS": "Login successful!",
     "ACCOUNT_CREATED": "Account successfully created!",
-    "GENERAL_ERROR": "Oh no!  Something went wrong!  Try again or come back later."
+    "GENERAL_ERROR": "Oh no!  Something went wrong!  Try again or come back later.",
+    "FORM_TITLE": "Title",
+    "FORM_MODEL_TITLE": "Model Name",
+    "FORM_SAVE": "Save",
+    "FORM_ADD_STEP": "Add Step",
+    "FORM_DESCRIBE_STEP": "Additional step details",
+    "FORM_SEARCH_PAINT": "Search Paint",
+    "FORM_REMOVE_STEP": "Remove Step",
+    "FORM_RATIO_PARTS": "parts",
+    "FORM_REMOVE": "Remove"
+
 }

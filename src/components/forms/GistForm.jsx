@@ -25,6 +25,7 @@ const LineItem = ({
   techniques, paints, index, removeStep,
 }) => {
   const ref = useRef();
+  const intl = useIntl();
 
   const { register, control } = useFormContext();
   const { fields, append, remove } = useFieldArray({ name: `steps.${index}.paints`, control });
@@ -56,7 +57,7 @@ const LineItem = ({
           </select>
         </div>
         <div className="col-sm-10">
-          <Input placeholder="describe step" name={`steps.${index}.description`} />
+          <Input placeholder={intl.formatMessage({ id: 'FORM_DESCRIBE_STEP' })} name={`steps.${index}.description`} />
         </div>
       </div>
       <div className="row">
@@ -65,9 +66,9 @@ const LineItem = ({
             onChange={handleTypeaheadChange}
             options={paintOptions}
             ref={ref}
-            placeholder="search paints"
+            placeholder={intl.formatMessage({ id: 'FORM_SEARCH_PAINT' })}
           />
-          <Button design="link" text="Remove this step" onClick={removeStep} />
+          <Button design="link" text={intl.formatMessage({ id: 'FORM_REMOVE_STEP' })} onClick={removeStep} />
         </div>
         <div className="col-sm-8">
           {fields.map((paint, paintIndex) => (
@@ -79,10 +80,10 @@ const LineItem = ({
                 <Input name={`steps.${index}.paints.${paintIndex}.id`} hidden />
               </div>
               <div className="col-sm-3">
-                <Input appendLabel="parts" name={`steps.${index}.paints.${paintIndex}.ratio`} defaultValue={paint.ratio} />
+                <Input appendLabel={intl.formatMessage({ id: 'FORM_RATIO_PARTS' })} name={`steps.${index}.paints.${paintIndex}.ratio`} defaultValue={paint.ratio} />
               </div>
               <div className="col-sm-6">
-                <Button text="Remove" design="link" onClick={() => handleRemovePaint(paintIndex)} />
+                <Button text={intl.formatMessage({ id: 'FORM_REMOVE' })} design="link" onClick={() => handleRemovePaint(paintIndex)} />
               </div>
             </div>
           ))}
@@ -133,8 +134,8 @@ const GistForm = ({ techniques, paints }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row">
           <div className="col-sm-6">
-            <Input label="Title" {...register('title')} />
-            <Input label="Model Name" {...register('modelName')} />
+            <Input label={intl.formatMessage({ id: 'FORM_TITLE' })} name="title" />
+            <Input label={intl.formatMessage({ id: 'FORM_MODEL_TITLE' })} name="modelName" />
             <div className="form-group">
               <select className="form-control" {...register('difficulty')}>
                 <option>easy</option>
@@ -154,11 +155,11 @@ const GistForm = ({ techniques, paints }) => {
         <div className="gist-form__steps">
           { fields.map((field, index) => <LineItem techniques={techniques} paints={paints} index={index} removeStep={() => handleRemove(index)} />) }
         </div>
-        <Button design="success" text="Add Step" onClick={handleAdd} />
+        <Button design="success" text={intl.formatMessage({ id: 'FORM_ADD_STEP' })} onClick={handleAdd} />
         <hr />
 
         <div className="gist-form__controls">
-          <Button type="submit" text="Save Gist" />
+          <Button type="submit" text={intl.formatMessage({ id: 'FORM_SAVE' })} />
         </div>
       </form>
     </FormProvider>
