@@ -8,6 +8,8 @@ import useUserGists from '../hooks/useUserGists';
 
 import { Tabs, TabPanel } from '../components/Tab';
 
+import './Dashboard.scss';
+
 const Dashboard = ({ user }) => {
   const { id } = user;
   const { isLoading, error, data } = useUserGists(id);
@@ -15,7 +17,13 @@ const Dashboard = ({ user }) => {
   if (isLoading) return null;
 
   return (
-    <Page title="Dashboard">
+    <Page>
+      <div className="profile-header">
+        <img alt="" className="profile-header__image" src="https://via.placeholder.com/250" />
+        <div className="profile-header__info">
+          <h2 className="profile-header__info-name">John Smith</h2>
+        </div>
+      </div>
       <Tabs>
         <TabPanel name="My Gists">
           <div className="row">
