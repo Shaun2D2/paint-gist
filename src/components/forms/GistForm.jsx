@@ -22,7 +22,7 @@ import './GistForm.scss';
 const { api } = getConfig();
 
 const LineItem = ({
-  techniques, paints, index, removeStep,
+  techniques, paints, index, removeStep, defaultValues = {},
 }) => {
   const ref = useRef();
   const intl = useIntl();
@@ -47,46 +47,39 @@ const LineItem = ({
   return (
     <div className="gist-form-line-item">
       <div className="row">
-        <div className="col-sm-12">
-          <h5 className="gist-form-line-item__title">{`Step ${index + 1}`}</h5>
-        </div>
-        <div className="col-sm-2">
-          <select className="form-select" {...register(`steps.${index}.techniqueId`)}>
-            <option>Select Technique</option>
-            {techniques.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}
-          </select>
-        </div>
-        <div className="col-sm-10">
-          <Input placeholder={intl.formatMessage({ id: 'FORM_DESCRIBE_STEP' })} name={`steps.${index}.description`} />
+        <div className="col-sm-6">
+          <div className="form-group">
+            <label className="form-label">Technique</label>
+            <select className="form-select" {...register(`steps.${index}.techniqueId`)}>
+              {techniques.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}
+            </select>
+          </div>
+          <Input label="Description" defaultValue={defaultValues.description} placeholder={intl.formatMessage({ id: 'FORM_DESCRIBE_STEP' })} name={`steps.${index}.description`} />
+          <div className="form-group">
+            <label className="form-label">Paints</label>
+            <Typeahead
+              onChange={handleTypeaheadChange}
+              options={paintOptions}
+              ref={ref}
+              placeholder={intl.formatMessage({ id: 'FORM_SEARCH_PAINT' })}
+            />
+          </div>
+          {fields.map((paint, paintIndex) => (
+            <div className="row">
+              <div className="col-sm-6">
+                {paint.label}
+              </div>
+              <div className="col-sm-4">
+                <Input appendLabel={intl.formatMessage({ id: 'FORM_RATIO_PARTS' })} name={`steps.${index}.paints.${paintIndex}.ratio`} defaultValue={paint.ratio} />
+              </div>
+
+            </div>
+          ))}
         </div>
       </div>
       <div className="row">
         <div className="col-sm-4">
-          <Typeahead
-            onChange={handleTypeaheadChange}
-            options={paintOptions}
-            ref={ref}
-            placeholder={intl.formatMessage({ id: 'FORM_SEARCH_PAINT' })}
-          />
           <Button design="link" text={intl.formatMessage({ id: 'FORM_REMOVE_STEP' })} onClick={removeStep} />
-        </div>
-        <div className="col-sm-8">
-          {fields.map((paint, paintIndex) => (
-            <div className="row">
-              <div className="col-sm-3">
-                <div className="form-group">
-                  <input className="form-control" value={paint.label} disabled />
-                </div>
-                <Input name={`steps.${index}.paints.${paintIndex}.id`} hidden />
-              </div>
-              <div className="col-sm-3">
-                <Input appendLabel={intl.formatMessage({ id: 'FORM_RATIO_PARTS' })} name={`steps.${index}.paints.${paintIndex}.ratio`} defaultValue={paint.ratio} />
-              </div>
-              <div className="col-sm-6">
-                <Button text={intl.formatMessage({ id: 'FORM_REMOVE' })} design="link" onClick={() => handleRemovePaint(paintIndex)} />
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>
@@ -100,21 +93,25 @@ LineItem.propTypes = {
   removeStep: PropTypes.func.isRequired,
 };
 
-const GistForm = ({ techniques, paints }) => {
+const GistForm = ({ techniques, paints, defaultValues }) => {
   const history = useHistory();
   const intl = useIntl();
 
   const onSubmit = useCallback(async (values) => {
     try {
-      await axios.post(`${api}/gists`, values, { withCredentials: true });
+      console.log(values);
+      // await axios.post(`${api}/gists`, values, { withCredentials: true });
 
-      history.push('/dashboard');
+      // history.push('/dashboard');
     } catch (e) {
       console.log(e);
     }
   }, []);
 
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues,
+  });
+
   const {
     register, handleSubmit, control, setValue,
   } = methods;
@@ -136,24 +133,33 @@ const GistForm = ({ techniques, paints }) => {
           <div className="col-sm-6">
             <Input label={intl.formatMessage({ id: 'FORM_TITLE' })} name="title" />
             <Input label={intl.formatMessage({ id: 'FORM_MODEL_TITLE' })} name="modelName" />
-            <div className="form-group">
+            {/* <div className="form-group">
               <select className="form-control" {...register('difficulty')}>
                 <option>easy</option>
                 <option>intermediate</option>
                 <option>difficult</option>
               </select>
-            </div>
-            <label>
+            </div> */}
+            {/* <label>
               <Toggle
                 onChange={handlePrivateToggle}
               />
               <span>{intl.formatMessage({ id: 'PRIVATE' })}</span>
-            </label>
+            </label> */}
 
           </div>
         </div>
         <div className="gist-form__steps">
-          { fields.map((field, index) => <LineItem techniques={techniques} paints={paints} index={index} removeStep={() => handleRemove(index)} />) }
+          { fields.map((field, index) => (
+            <LineItem
+              key={field.id}
+              techniques={techniques}
+              paints={paints}
+              index={index}
+              removeStep={() => handleRemove(index)}
+              defaultValues={defaultValues}
+            />
+          ))}
         </div>
         <Button design="success" text={intl.formatMessage({ id: 'FORM_ADD_STEP' })} onClick={handleAdd} />
         <hr />
@@ -169,11 +175,13 @@ const GistForm = ({ techniques, paints }) => {
 GistForm.propTypes = {
   techniques: PropTypes.arrayOf(PropTypes.object),
   paints: PropTypes.arrayOf(PropTypes.object),
+  defaultValues: PropTypes.shape({}),
 };
 
 GistForm.defaultProps = {
   techniques: [],
   paints: [],
+  defaultValues: {},
 };
 
 export default GistForm;

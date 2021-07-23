@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import React, { useEffect, useState } from 'react';
 
 import GistCreate from './pages/GistCreate';
+import GistEdit from './pages/GistEdit';
 import Dashboard from './pages/Dashboard';
 // import Settings from './pages/Settings';
 import Gist from './pages/Gist';
@@ -53,6 +54,7 @@ const Routes = ({ showNav }) => {
       <Route path="/dashboard" exact component={Dashboard} />
       <Route path="/create" exact component={GistCreate} />
       <Route path="/gist/:id" exact component={Gist} />
+      <Route path="/gist/:id/edit" exact component={GistEdit} />
       <Route component={() => <h1>404</h1>} />
     </Switch>
 

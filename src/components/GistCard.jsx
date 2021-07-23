@@ -43,6 +43,12 @@ const GistCard = ({
     history.push(`/gist/${id}`);
   };
 
+  const handeEditClick = (e) => {
+    e.preventDefault();
+
+    history.push(`/gist/${id}/edit`);
+  };
+
   return (
     <Card>
       <div className="gist-card">
@@ -51,7 +57,7 @@ const GistCard = ({
           <Dropdown className="gist-card__options">
             <Toggle as={CustomToggle} />
             <Menu>
-              <Item>Edit</Item>
+              <Item><a href="#" onClick={handeEditClick}>Edit</a></Item>
               <Item>Share</Item>
             </Menu>
           </Dropdown>
