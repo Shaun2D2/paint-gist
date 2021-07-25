@@ -80,5 +80,6 @@ export const Create = Template.bind({});
 Create.args = {
   paints: PAINTS,
   techniques: TECHNIQUES,
-  handleSubmit: (values) => console.log(values)
+  handleSubmit: (values) => console.log(values),
+  steps: [{}],
 };

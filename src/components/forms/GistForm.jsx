@@ -8,6 +8,10 @@ import Toggle from 'react-toggle';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useIntl } from 'react-intl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTimes, faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 
 import Input from './Input';
 import Button from './Button';
@@ -22,7 +26,7 @@ import './GistForm.scss';
 const { api } = getConfig();
 
 const LineItem = ({
-  techniques, paints, index, removeStep, defaultValues = {},
+  techniques, paints, index, removeStep, defaultValues = {}, suppressDelete
 }) => {
   const ref = useRef();
   const intl = useIntl();
@@ -46,40 +50,42 @@ const LineItem = ({
 
   return (
     <div className="gist-form-line-item">
-      <div className="row">
-        <div className="col-sm-6">
-          <div className="form-group">
-            <label className="form-label">Technique</label>
-            <select className="form-select" {...register(`steps.${index}.techniqueId`)}>
-              {techniques.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}
-            </select>
-          </div>
-          <Input label="Description" defaultValue={defaultValues.description} placeholder={intl.formatMessage({ id: 'FORM_DESCRIBE_STEP' })} name={`steps.${index}.description`} />
-          <div className="form-group">
-            <label className="form-label">Paints</label>
-            <Typeahead
-              onChange={handleTypeaheadChange}
-              options={paintOptions}
-              ref={ref}
-              placeholder={intl.formatMessage({ id: 'FORM_SEARCH_PAINT' })}
-            />
-          </div>
-          {fields.map((paint, paintIndex) => (
-            <div className="row">
-              <div className="col-sm-6">
-                {paint.label}
-              </div>
-              <div className="col-sm-4">
-                <Input appendLabel={intl.formatMessage({ id: 'FORM_RATIO_PARTS' })} name={`steps.${index}.paints.${paintIndex}.ratio`} defaultValue={paint.ratio} />
-              </div>
-
-            </div>
-          ))}
-        </div>
+      <div className="gist-form-line-item__header">
+        {!suppressDelete && <Button design="link" text={<FontAwesomeIcon icon={faTimes} size="lg" />} onClick={removeStep} />}
       </div>
-      <div className="row">
-        <div className="col-sm-4">
-          <Button design="link" text={intl.formatMessage({ id: 'FORM_REMOVE_STEP' })} onClick={removeStep} />
+      <div className="gist-form-line-item__body">
+        <div className="row">
+          <div className="col-sm-6">
+            <div className="form-group">
+              <label className="form-label">Technique</label>
+              <select className="form-select" {...register(`steps.${index}.techniqueId`)}>
+                {techniques.map((option) => <option key={option.id} value={option.id}>{option.name}</option>)}
+              </select>
+            </div>
+            <Input label="Description" defaultValue={defaultValues.description} placeholder={intl.formatMessage({ id: 'FORM_DESCRIBE_STEP' })} name={`steps.${index}.description`} />
+          </div>
+          <div className="col-sm-6">
+            <div className="form-group">
+              <label className="form-label">Paints</label>
+              <Typeahead
+                onChange={handleTypeaheadChange}
+                options={paintOptions}
+                ref={ref}
+                placeholder={intl.formatMessage({ id: 'FORM_SEARCH_PAINT' })}
+              />
+            </div>
+            {fields.map((paint, paintIndex) => (
+              <div className="row">
+                <div className="col-sm-6">
+                  {paint.label}
+                </div>
+                <div className="col-sm-4">
+                  <Input appendLabel={intl.formatMessage({ id: 'FORM_RATIO_PARTS' })} name={`steps.${index}.paints.${paintIndex}.ratio`} defaultValue={paint.ratio} />
+                </div>
+
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -129,7 +135,7 @@ const GistForm = ({ techniques, paints, defaultValues }) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="row">
+        <div className="row" style={{ marginBottom: 15 }}>
           <div className="col-sm-6">
             <Input label={intl.formatMessage({ id: 'FORM_TITLE' })} name="title" />
             <Input label={intl.formatMessage({ id: 'FORM_MODEL_TITLE' })} name="modelName" />
@@ -158,13 +164,14 @@ const GistForm = ({ techniques, paints, defaultValues }) => {
               index={index}
               removeStep={() => handleRemove(index)}
               defaultValues={defaultValues}
+              suppressDelete={index === 0}
             />
           ))}
+          { fields.length > 0 && <button onClick={handleAdd} className="gist-form__steps-button"><FontAwesomeIcon icon={faPlus} size="lg" /></button>}
         </div>
-        <Button design="success" text={intl.formatMessage({ id: 'FORM_ADD_STEP' })} onClick={handleAdd} />
-        <hr />
-
         <div className="gist-form__controls">
+        <Button design="success" text={intl.formatMessage({ id: 'FORM_ADD_STEP' })} onClick={handleAdd} />
+
           <Button type="submit" text={intl.formatMessage({ id: 'FORM_SAVE' })} />
         </div>
       </form>
