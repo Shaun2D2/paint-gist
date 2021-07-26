@@ -14,7 +14,7 @@
     "LOGIN_FAILED": "Username or password error!",
     "LOGIN_SUCCESS": "Login successful!",
     "ACCOUNT_CREATED": "Account successfully created!",
-    "GENERAL_ERROR": "Oh no!  Something went wrong!  Try again or come back later.",
+    "GENERAL_ERROR": "Oh no!  Something went wrong!  Try again.",
     "FORM_TITLE": "Title",
     "FORM_MODEL_TITLE": "Model Name",
     "FORM_SAVE": "Save",
@@ -23,6 +23,7 @@
     "FORM_SEARCH_PAINT": "Search Paint",
     "FORM_REMOVE_STEP": "Remove Step",
     "FORM_RATIO_PARTS": "parts",
-    "FORM_REMOVE": "Remove"
-
+    "FORM_REMOVE": "Remove",
+    "EMAIL_SIGNUP": "Want to get updates on when Paint Gist launches?  Sign up below to get notifications!",
+    "NEWSLETTER_SIGNUP_TOAST": "Thanks! We'll let you know when we launch."
 }
